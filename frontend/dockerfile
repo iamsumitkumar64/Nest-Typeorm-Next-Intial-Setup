@@ -71,8 +71,7 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Create a non-root user
-RUN addgroup -S myGroup
-RUN adduser -S myUser -G myGroup
+RUN addgroup -S myGroup && adduser -S myUser -G myGroup
 
 # Copy application files
 COPY --from=builder --chown=myUser:myGroup /app/package.json ./

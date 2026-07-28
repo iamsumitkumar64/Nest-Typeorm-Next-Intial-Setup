@@ -11,9 +11,6 @@ FROM ${NODE_IMAGE} AS base
 
 WORKDIR /app
 
-# FOR SIGIL Error
-ENV NODE_OPTIONS="--max-old-space-size=512"
-
 # Copy package files first for dependency caching
 COPY package.json package-lock.json ./
 
@@ -70,8 +67,7 @@ FROM ${NODE_IMAGE} AS production
 WORKDIR /app
 
 # Create a non-root user
-RUN addgroup -S myGroup
-RUN adduser -S myUser -G myGroup
+RUN addgroup -S myGroup && adduser -S myUser -G myGroup
 
 # Copy only what we need from the builder
 COPY --from=builder --chown=myUser:myGroup /app/node_modules ./node_modules
@@ -86,7 +82,6 @@ EXPOSE ${PORT}
 
 # Set production environment
 ENV NODE_ENV=production
-ENV NODE_OPTIONS="--max-old-space-size=512"
 # ENV PORT=8080
 
 # Start the application
