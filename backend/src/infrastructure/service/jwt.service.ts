@@ -10,7 +10,7 @@ export class JwtHelperService {
         const payload = {
             uuid: userObj.uuid,
             email: userObj.email,
-            name: userObj.name,
+            username: userObj.username,
             role: userObj.role
         };
 

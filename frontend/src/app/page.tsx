@@ -15,7 +15,7 @@ export default function Home() {
         <HeaderComp />
       </Box>
 
-      <Typography>Name - {user?.name}</Typography>
+      <Typography>Username - {user?.username}</Typography>
       <Typography>Email - {user?.email}</Typography>
       <Typography>Role - {user?.role}</Typography>
     </Box>

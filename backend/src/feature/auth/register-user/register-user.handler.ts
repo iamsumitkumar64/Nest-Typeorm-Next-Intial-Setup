@@ -31,7 +31,7 @@ export class RegisterUserHandler {
             message: "Registered User",
             access_token: token,
             user: {
-                name: RegisteredUser.name,
+                username: RegisteredUser.username,
                 email: RegisteredUser.email,
                 role: RegisteredUser.role,
                 uid: RegisteredUser.uuid,

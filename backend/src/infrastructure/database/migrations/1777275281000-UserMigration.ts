@@ -13,7 +13,7 @@ export class UserMigration1777275281000 implements MigrationInterface {
                 name: "user",
                 columns: [
                     { name: "uuid", type: "uuid", isPrimary: true, isGenerated: false, default: "uuid_generate_v4()" },
-                    { name: "name", type: "varchar", isNullable: false },
+                    { name: "username", type: "varchar", isNullable: false },
                     { name: "email", type: "varchar", isUnique: true, isNullable: false },
                     { name: "password", type: "varchar", isNullable: true },
                     { name: "role", type: "user_role_enum", default: `'user'`, isNullable: false },

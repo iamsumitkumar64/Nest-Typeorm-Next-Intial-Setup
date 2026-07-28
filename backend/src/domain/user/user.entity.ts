@@ -7,7 +7,7 @@ export class UserEntity {
     uuid: string;
 
     @Column({ nullable: false })
-    name: string;
+    username: string;
 
     @Column({ type: "varchar", unique: true, nullable: true })
     email: string;

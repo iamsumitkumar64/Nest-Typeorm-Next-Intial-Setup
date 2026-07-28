@@ -18,7 +18,7 @@ export class UserRepository extends Repository<UserEntity> {
             where: { uuid },
             select: {
                 email: true,
-                name: true,
+                username: true,
                 uuid: true,
                 role: true,
             },
@@ -30,7 +30,7 @@ export class UserRepository extends Repository<UserEntity> {
             where: { email },
             select: {
                 email: true,
-                name: true,
+                username: true,
                 uuid: true,
                 password: true,
                 role: true,

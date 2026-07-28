@@ -30,7 +30,7 @@ export class LoginUserHandler {
             message: "Logged In User",
             access_token: token,
             user: {
-                name: isUserExists.name,
+                username: isUserExists.username,
                 email: isUserExists.email,
                 role: isUserExists.role,
                 uid: isUserExists.uuid,

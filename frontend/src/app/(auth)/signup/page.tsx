@@ -54,14 +54,14 @@ export default function SignupForm() {
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <Box className={styles.field}>
                         <TextField
-                            label="Name"
+                            label="Username"
                             type="text"
                             fullWidth
-                            {...register("name")}
+                            {...register("username")}
                         />
-                        {errors.name && (
+                        {errors.username && (
                             <span className={styles.error}>
-                                {errors.name.message}
+                                {errors.username.message}
                             </span>
                         )}
                     </Box>
@@ -83,7 +83,7 @@ export default function SignupForm() {
                         label="Role"
                         defaultValue="user"
                         {...register("role")}
-                    >//
+                    >
                         <MenuItem value="user">{UserRoleEnum.USER.toUpperCase()}</MenuItem>
                         <MenuItem value="company">{UserRoleEnum.COMPANY.toUpperCase()}</MenuItem>
                     </TextField>

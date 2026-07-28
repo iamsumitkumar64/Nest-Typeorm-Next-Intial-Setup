@@ -4,7 +4,7 @@ import { UserRoleEnum } from 'src/domain/user/user.enum';
 export class RegisterUserDto {
     @IsString()
     @IsNotEmpty()
-    name: string;
+    username: string;
 
     @IsEmail()
     @IsNotEmpty()
