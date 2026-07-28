@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 let socket: Socket | null = null;
 
 export const connectSocket = (token: string): Socket => {
-    const socketUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:9001";
+    const socketUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090";
 
     socket = io(socketUrl, {
         auth: { token }

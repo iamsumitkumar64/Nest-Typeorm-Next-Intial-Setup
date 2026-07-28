@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 import { dataSource, options } from '../data-source';
 import { UserEntity } from 'src/domain/user/user.entity';
 import { BcryptService } from '../../service/bcrypt.service';
