@@ -1,6 +1,6 @@
 
--> production docker ($/poc/any) ->  docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build 
--> development docker ($/poc/any) -> docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build 
+-> production docker ($/poc/any) -> docker compose --env-file .env -f docker-compose.yml -f docker-compose.prod.yml up --build 
+-> development docker ($/poc/any) -> docker compose --env-file .env -f docker-compose.yml -f docker-compose.dev.yml up --build 
 
 
 For DB Migration 
