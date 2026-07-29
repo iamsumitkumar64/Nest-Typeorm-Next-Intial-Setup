@@ -16,7 +16,7 @@ build/
 *.sqlite
 
 # Environment/Secrets
-# .env
+.env
 .env.local
 .env.*.local
 .aws/
