@@ -58,31 +58,28 @@ CMD ["npm", "run", "start:dev"]
 # Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
 
-# # Remove devDependencies after build
-# RUN npm prune --omit=dev
-
-# Install security updates
-# RUN apk update && apk upgrade --no-cache
-
 WORKDIR /app
 
-# Create a non-root user
-RUN addgroup -S myGroup && adduser -S myUser -G myGroup
+# Create a non-root user and set working directory ownership
+RUN addgroup -S myGroup && adduser -S myUser -G myGroup && chown -R myUser:myGroup /app
 
-# Copy only what we need from the builder
-COPY --from=builder --chown=myUser:myGroup /app/node_modules ./node_modules
-COPY --from=builder --chown=myUser:myGroup /app/dist ./dist
-COPY --from=builder --chown=myUser:myGroup /app/package.json ./
+# Copy package files with --chown
+COPY --chown=myUser:myGroup package.json package-lock.json ./
 
-# Switch to non-root user
+# Switch to non-root user before clean install
 USER myUser
+
+# Clean install production dependencies
+RUN npm ci --omit=dev
+
+# Copy compiled build output from builder with --from=builder --chown
+COPY --from=builder --chown=myUser:myGroup /app/dist ./dist
 
 # Expose the application port
 EXPOSE ${PORT}
 
 # Set production environment
 ENV NODE_ENV=production
-# ENV PORT=8080
 
 # Start the application
 CMD ["node", "dist/main.js"]

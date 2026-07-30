@@ -70,18 +70,22 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Create a non-root user
-RUN addgroup -S myGroup && adduser -S myUser -G myGroup
+# Create a non-root user and set working directory ownership
+RUN addgroup -S myGroup && adduser -S myUser -G myGroup && chown -R myUser:myGroup /app
 
-# Copy application files
-COPY --from=builder --chown=myUser:myGroup /app/package.json ./
-COPY --from=builder --chown=myUser:myGroup /app/package-lock.json ./
-COPY --from=builder --chown=myUser:myGroup /app/node_modules ./node_modules
+# Copy package files with --chown
+COPY --chown=myUser:myGroup package.json package-lock.json ./
+
+# Switch to non-root user before clean install
+USER myUser
+
+# Clean install production dependencies
+RUN npm ci --omit=dev
+
+# Copy built application output from builder with --from=builder --chown
 COPY --from=builder --chown=myUser:myGroup /app/.next ./.next
 COPY --from=builder --chown=myUser:myGroup /app/public ./public
 COPY --from=builder --chown=myUser:myGroup /app/next.config.ts ./next.config.ts
-
-USER myUser
 
 # Expose the application port
 EXPOSE ${PORT}
