@@ -35,7 +35,7 @@ import { DataSourceOptions } from 'typeorm';
 
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_REGISTER_SECRET || 'cdcwrg3',
+      secret: process.env.JWT_REGISTER_SECRET || 'cdcwrg3mNJyUKpvAvd3L9psS8wXMzcm4nNbA4ka1vneueuNSsFirdqft3goL7',
       // signOptions: { expiresIn: '60m' },
     }),
 
