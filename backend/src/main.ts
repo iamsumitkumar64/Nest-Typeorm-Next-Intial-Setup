@@ -2,15 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './infrastructure/filters/all-exceptions.filter';
-import 'dotenv/config';
+import { ConfigService } from '@nestjs/config';
 import { initializeTransactionalContext } from 'typeorm-transactional';
 
 async function bootstrap() {
   initializeTransactionalContext();
   const app = await NestFactory.create(AppModule);
 
+  const configService = app.get(ConfigService);
+
   app.enableCors({
-    origin: [process.env.FRONTEND_URL ?? 'http://localhost:3000'],
+    origin: [configService.get<string>('FRONTEND_URL') ?? 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'authorization'],
@@ -25,6 +27,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  await app.listen(process.env.PORT ?? 8090);
+  const port = configService.get<number>('PORT') ?? 8090;
+  await app.listen(port);
 }
 bootstrap();

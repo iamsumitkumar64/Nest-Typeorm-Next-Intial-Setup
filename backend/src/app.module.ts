@@ -6,7 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './infrastructure/repository/user.repository';
 import { AuthenticateMiddleware } from './infrastructure/middleware/authenticate.middleware';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BcryptService } from './infrastructure/service/bcrypt.service';
 import { SocketModule } from './infrastructure/socket/socket.module';
 import { JwtHelperService } from './infrastructure/service/jwt.service';
@@ -21,22 +21,27 @@ import { DataSourceOptions } from 'typeorm';
     }),
 
     TypeOrmModule.forRootAsync({
-      useFactory: () => ({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
         ...dataSource.options,
-        retryAttempts: Number(process.env.DB_RETRY_ATTEMPTS) || 10,
-        retryDelay: Number(process.env.DB_RETRY_DELAY) || 5000,
+        retryAttempts: Number(configService.get('DB_RETRY_ATTEMPTS')) || 10,
+        retryDelay: Number(configService.get('DB_RETRY_DELAY')) || 5000,
       }),
       dataSourceFactory: async (options) =>
         createTransactionalDataSourceService(
-          process.env.DB_POSTGRES_HOST || 'database',
+          ((options as any)?.host as string) || 'database',
           options as DataSourceOptions,
         ),
     }),
 
-    JwtModule.register({
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_REGISTER_SECRET') || 'cdcwrg3mNJyUKpvAvd3L9psS8wXMzcm4nNbA4ka1vneueuNSsFirdqft3goL7',
+      }),
       global: true,
-      secret: process.env.JWT_REGISTER_SECRET || 'cdcwrg3mNJyUKpvAvd3L9psS8wXMzcm4nNbA4ka1vneueuNSsFirdqft3goL7',
-      // signOptions: { expiresIn: '60m' },
     }),
 
     //Modules

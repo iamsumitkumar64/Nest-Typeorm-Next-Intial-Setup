@@ -2,6 +2,7 @@
 import { dataSource, options } from '../data-source';
 import { UserEntity } from 'src/domain/user/user.entity';
 import { BcryptService } from '../../service/bcrypt.service';
+import { ConfigService } from '@nestjs/config';
 
 // hardcoded users for all microservices
 const users = [
@@ -28,7 +29,8 @@ async function create() {
 
     await dataSource.initialize();
 
-    const bcryptService = new BcryptService();
+    const configService = new ConfigService();
+    const bcryptService = new BcryptService(configService);
     const hashedPassword = await bcryptService.hashPassword("123");
 
     const queryRunner = dataSource.createQueryRunner();
