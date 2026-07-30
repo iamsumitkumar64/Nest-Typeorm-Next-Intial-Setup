@@ -6,7 +6,3 @@
 For DB Migration 
 -> in terminal ($/poc/backend) -> docker compose exec backend sh
     npm run build && npm run migration:run && npm run seed
-
-
-backend libs-> npm install @nestjs/common @nestjs/config @nestjs/core @nestjs/cqrs @nestjs/jwt @nestjs/platform-express @nestjs/typeorm bcrypt class-transformer class-validator pg reflect-metadata rxjs typeorm && npm install @faker-js/faker --save-dev && npm install @nestjs/websockets @nestjs/platform-socket.io socket.io
-frontend libs -> npm install @emotion/styled @hookform/resolvers @mui/icons-material @mui/material @reduxjs/toolkit js-cookie next notistack react react-dom react-hook-form react-infinite-scroll-component react-redux redux-persist zod
