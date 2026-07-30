@@ -65,10 +65,7 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-
-# Cloud Run uses the PORT environment variable
 ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 
 # Create a non-root user and set working directory ownership
 RUN addgroup -S myGroup && adduser -S myUser -G myGroup && chown -R myUser:myGroup /app
